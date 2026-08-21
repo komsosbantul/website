@@ -27,7 +27,7 @@ export default function PageHeader({
       </div>
 
       {/* Content */}
-      <FadeIn className="relative z-10 text-center px-4" delay={0.2}>
+      <FadeIn className="relative z-10 text-center px-4 pt-16 md:pt-20" delay={0.2}>
         <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 drop-shadow-md">
           {title}
         </h1>
