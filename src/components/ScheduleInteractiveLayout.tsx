@@ -33,14 +33,12 @@ export default function ScheduleInteractiveLayout({ groupedData }: { groupedData
       <div className="w-full md:w-1/3 lg:w-1/4 shrink-0">
         <div className="sticky top-24 bg-white rounded-xl shadow-sm border border-slate-100 p-4">
           <div className="flex items-center justify-between mb-4 px-3">
-            <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
+            <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2 md:mb-0">
               Pilih Gereja
             </h3>
-            <span className="text-[10px] text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full md:hidden flex items-center gap-1">
-              Geser ➔
-            </span>
           </div>
-          <div className="flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-visible pb-2 md:pb-0 hide-scrollbar snap-x">
+          {/* Desktop view (buttons) */}
+          <div className="hidden md:flex flex-col gap-2">
             {groupedData.map((church, index) => {
               const isActive = index === activeIndex;
               return (
@@ -54,12 +52,30 @@ export default function ScheduleInteractiveLayout({ groupedData }: { groupedData
                   }`}
                 >
                   <Church className={`w-5 h-5 ${isActive ? "text-white" : "text-slate-400"}`} />
-                  <span className={`font-semibold whitespace-nowrap md:whitespace-normal ${isActive ? "" : "text-sm"}`}>
+                  <span className={`font-semibold md:whitespace-normal ${isActive ? "" : "text-sm"}`}>
                     {church.church_name.replace("Gereja ", "")}
                   </span>
                 </button>
               );
             })}
+          </div>
+
+          {/* Mobile view (select dropdown) */}
+          <div className="md:hidden relative mt-2">
+            <select
+              className="w-full bg-white border border-slate-200 text-slate-800 font-semibold rounded-lg px-4 py-3 appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 shadow-sm"
+              value={activeIndex}
+              onChange={(e) => setActiveIndex(Number(e.target.value))}
+            >
+              {groupedData.map((church, index) => (
+                <option key={index} value={index}>
+                  {church.church_name.replace("Gereja ", "")}
+                </option>
+              ))}
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
           </div>
         </div>
       </div>

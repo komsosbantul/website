@@ -85,8 +85,13 @@ export default function Navbar() {
               
               if (item.children) {
                 return (
-                  <div key={item.label} className="relative group">
+                  <div 
+                    key={item.label} 
+                    className="relative group"
+                    onMouseLeave={() => setActiveDropdown(null)}
+                  >
                     <button
+                      onClick={() => toggleDropdown(item.label)}
                       className={`flex items-center gap-1 text-sm font-medium transition-colors duration-500 py-2 ${
                         isItemActive 
                           ? (isSolid ? "text-amber-600" : "text-amber-400") 
@@ -97,7 +102,11 @@ export default function Navbar() {
                       <ChevronDown size={16} />
                     </button>
                     {/* Dropdown Menu */}
-                    <div className="absolute top-full left-0 w-56 bg-white border border-gray-100 shadow-lg rounded-md overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
+                    <div className={`absolute top-full left-0 w-56 bg-white border border-gray-100 shadow-lg rounded-md overflow-hidden transition-all duration-200 transform ${
+                      activeDropdown === item.label 
+                        ? "opacity-100 visible translate-y-0" 
+                        : "opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0"
+                    }`}>
                       {item.children.map((child) => (
                         <Link
                           key={child.label}

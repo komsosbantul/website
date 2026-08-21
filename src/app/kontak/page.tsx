@@ -67,7 +67,7 @@ export default function KontakPage() {
                     <h3 className="text-xs font-bold text-amber-600 tracking-widest uppercase mb-1">
                       {info.label}
                     </h3>
-                    <p className="text-slate-800 font-medium text-lg leading-snug mb-2">
+                    <p className="text-slate-800 font-medium text-lg leading-snug mb-2 break-all md:break-normal">
                       {info.value}
                     </p>
                     {info.action && (
