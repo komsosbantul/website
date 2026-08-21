@@ -101,7 +101,6 @@ export default function ScheduleInteractiveLayout({ groupedData }: { groupedData
           </div>
         )}
 
-        </div>
       </div>
     </div>
   );
