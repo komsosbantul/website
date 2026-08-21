@@ -32,17 +32,22 @@ export default function ScheduleInteractiveLayout({ groupedData }: { groupedData
       {/* Master View (Sidebar/Tabs) */}
       <div className="w-full md:w-1/3 lg:w-1/4 shrink-0">
         <div className="sticky top-24 bg-white rounded-xl shadow-sm border border-slate-100 p-4">
-          <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 px-3">
-            Pilih Gereja
-          </h3>
-          <div className="flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-visible pb-2 md:pb-0 hide-scrollbar">
+          <div className="flex items-center justify-between mb-4 px-3">
+            <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
+              Pilih Gereja
+            </h3>
+            <span className="text-[10px] text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full md:hidden flex items-center gap-1">
+              Geser ➔
+            </span>
+          </div>
+          <div className="flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-visible pb-2 md:pb-0 hide-scrollbar snap-x">
             {groupedData.map((church, index) => {
               const isActive = index === activeIndex;
               return (
                 <button
                   key={index}
                   onClick={() => setActiveIndex(index)}
-                  className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg text-left transition-all shrink-0 md:shrink border ${
+                  className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg text-left transition-all shrink-0 md:shrink border snap-start ${
                     isActive 
                       ? "bg-amber-600 text-white border-amber-600 shadow-md" 
                       : "bg-transparent text-slate-600 border-transparent hover:bg-slate-50 hover:border-slate-200"
@@ -96,9 +101,6 @@ export default function ScheduleInteractiveLayout({ groupedData }: { groupedData
           </div>
         )}
 
-        {/* Global Note */}
-        <div className="mt-8 bg-amber-50 rounded-lg p-4 text-center text-amber-800 font-medium border border-amber-100 text-sm">
-          <p>Catatan: Seluruh perayaan Ekaristi dirayakan dalam Bahasa Indonesia.</p>
         </div>
       </div>
     </div>
