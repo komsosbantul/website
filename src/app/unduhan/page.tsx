@@ -7,38 +7,75 @@ export default function UnduhanPage() {
   const documents = [
     {
       id: 1,
-      title: "Formulir Pendaftaran Baptis Bayi/Anak",
-      description: "Untuk pendaftaran baptis bayi atau anak-anak (di bawah 7 tahun).",
-      format: "PDF",
-      link: "/docs/formulir-baptis-bayi.pdf"
+      title: "Blangko Baptis Darurat Dan Minyak Suci",
+      format: "DOC",
+      link: "/unduhan/BLANGKO BAPTIS DARURAT DAN MINYAK SUCI.doc"
     },
     {
       id: 2,
-      title: "Formulir Pendaftaran Baptis Dewasa",
-      description: " Formulir khusus untuk calon baptis dewasa (katekumen).",
-      format: "PDF",
-      link: "/docs/formulir-baptis-dewasa.pdf"
+      title: "Blangko Calon Penerima Baptis Bayi",
+      format: "DOC",
+      link: "/unduhan/BLANGKO CALON PENERIMA BAPTIS BAYI.doc"
     },
     {
       id: 3,
-      title: "Surat Pengantar Sakramen Perkawinan (Kanodik)",
-      description: "Wajib diserahkan ke sekretariat minimal 3 bulan sebelum pernikahan. Dilengkapi foto berdampingan 4x6.",
-      format: "PDF",
-      link: "/docs/kanodik.pdf"
+      title: "Blangko Calon Penerima Baptis Dewasa",
+      format: "DOC",
+      link: "/unduhan/BLANGKO CALON PENERIMA BAPTIS DEWASA.doc"
     },
     {
       id: 4,
-      title: "Formulir Intensi Misa",
-      description: "Untuk permohonan ujud misa (syukur, arwah, atau permohonan khusus).",
-      format: "DOCX",
-      link: "/docs/intensi-misa.docx"
+      title: "Blangko Calon Penerima Komuni I",
+      format: "DOC",
+      link: "/unduhan/BLANGKO CALON PENERIMA KOMUNI I.doc"
     },
     {
       id: 5,
-      title: "Panduan & Syarat Administrasi Krisma",
-      description: "Penjelasan lengkap mengenai syarat dan dokumen yang dibutuhkan untuk Sakramen Krisma.",
-      format: "PDF",
-      link: "/docs/panduan-krisma.pdf"
+      title: "Blangko Calon Penerima Krisma",
+      format: "DOC",
+      link: "/unduhan/BLANGKO CALON PENERIMA KRISMA.doc"
+    },
+    {
+      id: 6,
+      title: "Blangko Laporan Kematian",
+      format: "DOC",
+      link: "/unduhan/BLANGKO LAPORAN KEMATIAN.doc"
+    },
+    {
+      id: 7,
+      title: "Blangko Peneguhan Baptis Kristen Ke Katolik",
+      format: "DOC",
+      link: "/unduhan/BLANGKO PENEGUHAN BAPTIS KRISTEN ke KATOLIK.doc"
+    },
+    {
+      id: 8,
+      title: "Blangko Pindah Domisili",
+      format: "DOCX",
+      link: "/unduhan/BLANGKO PINDAH DOMISILI.docx"
+    },
+    {
+      id: 9,
+      title: "Blangko Sakramen Minyak Suci",
+      format: "DOCX",
+      link: "/unduhan/BLANGKO SAKRAMEN MINYAK SUCI.docx"
+    },
+    {
+      id: 10,
+      title: "Blangko Surat Keterangan Warga",
+      format: "DOC",
+      link: "/unduhan/BLANGKO SURAT KETERANGAN WARGA.doc"
+    },
+    {
+      id: 11,
+      title: "Blangko Surat Permohonan Ekaristi",
+      format: "DOCX",
+      link: "/unduhan/BLANGKO SURAT PERMOHONAN EKARISTI.docx"
+    },
+    {
+      id: 12,
+      title: "Blangko Surat Pernikahan Dari Lingkungan",
+      format: "DOC",
+      link: "/unduhan/BLANGKO SURAT PERNIKAHAN DR LINGK.doc"
     }
   ];
 
@@ -77,9 +114,6 @@ export default function UnduhanPage() {
                     {doc.format}
                   </span>
                 </div>
-                <p className="text-slate-500 text-sm leading-relaxed">
-                  {doc.description}
-                </p>
               </div>
 
               {/* Action Button */}
