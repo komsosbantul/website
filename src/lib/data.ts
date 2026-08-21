@@ -2,6 +2,8 @@
 export interface SiteConfig {
   name: string;
   description: string;
+  url: string;
+  keywords: string[];
   address: string;
   email: string;
   phone: string;
@@ -34,7 +36,20 @@ export interface HeroContent {
 
 export const siteConfig: SiteConfig = {
   name: "Paroki Santo Yakobus Bantul",
-  description: "Paroki Santo Yakobus Bantul - Melayani dengan Kasih dan Persaudaraan.",
+  description: "Website Resmi Paroki Santo Yakobus Bantul. Dapatkan informasi jadwal misa, berita paroki, sakramen, dan kegiatan umat Katolik di Bantul.",
+  url: "https://parokibantul.org",
+  keywords: [
+    "gereja katolik",
+    "jadwal misa",
+    "gereja di bantul",
+    "paroki bantul",
+    "gereja bantul",
+    "jadwal misa bantul",
+    "katolik bantul",
+    "paroki santo yakobus",
+    "keuskupan agung semarang",
+    "berita gereja bantul"
+  ],
   address: "Jalan Mgr. Albertus Soegijopranoto, No. 1, Bantul, Bantul, Bantul, Yogyakarta, 55711",
   email: "komsos.styakobus.bantul@gmail.com",
   phone: "0857-2576-3551",

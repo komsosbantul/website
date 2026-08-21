@@ -6,7 +6,48 @@ import { ArrowLeft, Calendar, Eye, Clock, User } from "lucide-react";
 import { createClient } from "@/utils/supabase/server";
 import { Database } from "@/types/database";
 
+import { Metadata, ResolvingMetadata } from "next";
+
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = await createClient();
+
+  const { data: article } = await supabase
+    .from("news_articles")
+    .select("title, excerpt, image_url")
+    .eq("slug", slug)
+    .single();
+
+  if (!article) {
+    return {
+      title: "Warta Tidak Ditemukan",
+    };
+  }
+
+  // Optionally access and extend (rather than replace) parent metadata
+  // const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: article.title,
+    description: article.excerpt || `Baca artikel warta paroki: ${article.title}`,
+    openGraph: {
+      title: article.title,
+      description: article.excerpt || `Baca artikel warta paroki: ${article.title}`,
+      images: article.image_url ? [article.image_url] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.excerpt || `Baca artikel warta paroki: ${article.title}`,
+      images: article.image_url ? [article.image_url] : [],
+    },
+  };
+}
 
 interface NewsDetailPageProps {
   params: Promise<{

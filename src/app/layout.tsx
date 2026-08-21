@@ -11,8 +11,37 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: siteConfig.name,
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
+  },
   description: siteConfig.description,
+  keywords: siteConfig.keywords,
+  authors: [{ name: "KOMSOS Paroki Santo Yakobus Bantul" }],
+  creator: "KOMSOS Paroki Santo Yakobus Bantul",
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: "/images/hero-bg.webp", // Fallback image for sharing
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: ["/images/hero-bg.webp"],
+  },
 };
 
 export default function RootLayout({
