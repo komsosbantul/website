@@ -95,7 +95,7 @@ export default function EditNewsPage() {
         published_date: formData.published_date || null,
       };
 
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from("news_articles")
         .update(payload as any)
         .eq("id", id);
@@ -125,7 +125,7 @@ export default function EditNewsPage() {
 
     setDeleting(true);
     try {
-      const { error } = await supabase.from("news_articles").delete().eq("id", id);
+      const { error } = await (supabase as any).from("news_articles").delete().eq("id", id);
       if (error) throw error;
       
       alert("Berita berhasil dihapus.");

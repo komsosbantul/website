@@ -49,7 +49,7 @@ export default function CreateNewsPage() {
     setLoading(true);
 
     try {
-      const { error } = await supabase.from("news_articles").insert([formData] as any);
+      const { error } = await (supabase as any).from("news_articles").insert([formData] as any);
       
       if (error) {
         if (error.code === '23505') { // Unique violation for slug
