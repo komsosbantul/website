@@ -39,14 +39,15 @@ export default function EditNewsPage() {
         if (error) throw error;
         
         if (data) {
+          const article = data as any;
           setFormData({
-            title: data.title,
-            slug: data.slug,
-            summary: data.summary,
-            content: data.content,
-            author_name: data.author_name || "",
-            image_url: data.image_url || "",
-            published_date: data.published_date || "",
+            title: article.title,
+            slug: article.slug,
+            summary: article.summary,
+            content: article.content,
+            author_name: article.author_name || "",
+            image_url: article.image_url || "",
+            published_date: article.published_date || "",
           });
         }
       } catch (error) {
