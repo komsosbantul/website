@@ -42,6 +42,11 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: ["/images/hero-bg.webp"],
   },
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
