@@ -109,52 +109,51 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
 
         <article className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
           
+           {/* Header Info */}
+           <div className="p-8 md:p-12 pb-6 md:pb-8">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-6">
+                {article.title}
+              </h1>
+              
+              <div className="flex flex-wrap items-center gap-3 md:gap-4 text-slate-600 text-sm font-medium">
+                {article.author_name && (
+                  <div className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-full">
+                    <User size={14} />
+                    {article.author_name}
+                  </div>
+                )}
+                <div className="flex items-center gap-1.5 bg-amber-50 text-amber-700 border border-amber-100 px-3 py-1.5 rounded-full">
+                  <Calendar size={14} />
+                  {article.published_date || "Tanggal tidak tersedia"}
+                </div>
+                <div className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-full">
+                  <Clock size={14} />
+                  {readingTime} min read
+                </div>
+                <div className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-full">
+                  <Eye size={14} />
+                  {(article.views || 0) + 1} Views
+                </div>
+              </div>
+           </div>
+
           {/* Header Image */}
-           <div className="relative w-full h-64 md:h-[400px]">
+           <div className="w-full">
              {article.image_url ? (
                <img
                  src={article.image_url}
                  alt={article.title}
-                 className="w-full h-full object-cover"
+                 className="w-full h-auto max-h-[500px] object-cover"
                />
              ) : (
-                <div className="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">
-                  <span className="text-lg font-medium">No Image Available</span>
+                <div className="w-full h-48 bg-slate-100 flex items-center justify-center text-slate-400 border-y border-slate-200">
+                  <span className="text-sm font-medium uppercase tracking-widest">No Image Available</span>
                 </div>
              )}
-             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-             
-             {/* Title Overlay */}
-             <div className="absolute bottom-0 left-0 p-8 w-full">
-                <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight drop-shadow-md mb-4">
-                  {article.title}
-                </h1>
-                
-                <div className="flex flex-wrap items-center gap-4 text-white/90 text-sm font-medium">
-                  {article.author_name && (
-                    <div className="flex items-center gap-1 bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                      <User size={14} />
-                      {article.author_name}
-                    </div>
-                  )}
-                  <div className="flex items-center gap-1 bg-amber-600 px-3 py-1.5 rounded-full">
-                    <Calendar size={14} />
-                    {article.published_date || "Tanggal tidak tersedia"}
-                  </div>
-                  <div className="flex items-center gap-1 bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                    <Clock size={14} />
-                    {readingTime} min read
-                  </div>
-                  <div className="flex items-center gap-1 bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                    <Eye size={14} />
-                    {(article.views || 0) + 1} Views
-                  </div>
-                </div>
-             </div>
            </div>
 
            {/* Content */}
-           <div className="p-8 md:p-12">
+           <div className="p-8 md:p-12 pt-8 md:pt-10">
              <div 
                className="prose prose-slate max-w-none prose-lg prose-headings:text-amber-700 prose-a:text-blue-600 hover:prose-a:text-blue-500"
                dangerouslySetInnerHTML={{ __html: article.content }}
