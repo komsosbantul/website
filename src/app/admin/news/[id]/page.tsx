@@ -16,6 +16,7 @@ export default function EditNewsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [coverFile, setCoverFile] = useState<File | null>(null);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -24,6 +25,7 @@ export default function EditNewsPage() {
     content: "",
     author_name: "",
     image_url: "",
+    category: "berita",
     published_date: "",
   });
 
@@ -45,6 +47,7 @@ export default function EditNewsPage() {
             slug: article.slug,
             summary: article.summary,
             content: article.content,
+            category: article.category || "berita",
             author_name: article.author_name || "",
             image_url: article.image_url || "",
             published_date: article.published_date || "",
@@ -85,13 +88,36 @@ export default function EditNewsPage() {
     setSaving(true);
 
     try {
+      let finalImageUrl = formData.image_url;
+
+      if (coverFile) {
+        const fileExt = coverFile.name.split('.').pop();
+        const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
+        const filePath = `news_covers/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from("news_images")
+          .upload(filePath, coverFile);
+
+        if (uploadError) {
+          throw new Error("Gagal mengupload gambar cover baru: " + uploadError.message);
+        }
+        
+        const { data: publicUrlData } = supabase.storage
+          .from("news_images")
+          .getPublicUrl(filePath);
+          
+        finalImageUrl = publicUrlData.publicUrl;
+      }
+
       const payload = {
         title: formData.title,
         slug: formData.slug,
         summary: formData.summary,
         content: formData.content,
+        category: formData.category,
         author_name: formData.author_name || null,
-        image_url: formData.image_url || null,
+        image_url: finalImageUrl || null,
         published_date: formData.published_date || null,
       };
 
@@ -214,31 +240,73 @@ export default function EditNewsPage() {
                 />
              </div>
 
-             {/* Image URL */}
+             {/* Image File */}
              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">URL Gambar Cover</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Upload Gambar Cover Baru (Opsional)</label>
+                
+                {coverFile ? (
+                   <div className="mb-3">
+                      <p className="text-xs text-slate-500 mb-1">Preview gambar baru:</p>
+                      <img 
+                        src={URL.createObjectURL(coverFile)} 
+                        alt="Cover preview" 
+                        className="h-32 object-cover rounded border" 
+                      />
+                   </div>
+                ) : formData.image_url ? (
+                   <div className="mb-3">
+                      <p className="text-xs text-slate-500 mb-1">Gambar saat ini:</p>
+                      <img 
+                        src={formData.image_url} 
+                        alt="Current cover" 
+                        className="h-32 object-cover rounded border" 
+                      />
+                   </div>
+                ) : null}
+
                 <input
-                type="url"
-                name="image_url"
-                value={formData.image_url}
-                onChange={handleChange}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
-                placeholder="https://example.com/image.jpg"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      setCoverFile(e.target.files[0]);
+                    }
+                  }}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
                 />
+                <p className="text-xs text-slate-400 mt-1">Biarkan kosong jika tidak ingin mengubah gambar.</p>
              </div>
           </div>
 
-          {/* Author */}
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Nama Penulis</label>
-            <input
-              type="text"
-              name="author_name"
-              value={formData.author_name}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
-              placeholder="Contoh: Willy Putranta"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+             {/* Category */}
+             <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Kategori</label>
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange as any}
+                  required
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                >
+                  <option value="pengumuman">Pengumuman</option>
+                  <option value="berita">Berita Paroki</option>
+                  <option value="katekese">Katekese</option>
+                </select>
+             </div>
+
+             {/* Author */}
+             <div>
+               <label className="block text-sm font-medium text-slate-700 mb-2">Nama Penulis</label>
+               <input
+                 type="text"
+                 name="author_name"
+                 value={formData.author_name}
+                 onChange={handleChange}
+                 className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                 placeholder="Contoh: Willy Putranta"
+               />
+             </div>
           </div>
 
           {/* Summary */}

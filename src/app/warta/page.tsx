@@ -1,98 +1,44 @@
 import React from "react";
 import PageHeader from "@/components/PageHeader";
-import { Calendar, ArrowRight, Eye, User } from "lucide-react";
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/server";
-import { Database } from "@/types/database";
 import FadeIn from "@/components/FadeIn";
+import { Info, Newspaper, BookOpen } from "lucide-react";
 
-export const dynamic = 'force-dynamic';
-
-export default async function WartaPage() {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("news_articles")
-    .select("*")
-    .order("published_date", { ascending: false });
-
-  const news = data as Database['public']['Tables']['news_articles']['Row'][] | null;
-
-  if (error) {
-    console.error("Error fetching news:", error);
-  }
-
+export default function WartaPage() {
   return (
     <main className="min-h-screen bg-slate-50 pb-20">
       <PageHeader 
         title="Warta Paroki" 
-        subtitle="Berita, Pengumuman, dan Informasi Terkini"
+        subtitle="Pengumuman, Berita, dan Katekese Terkini"
       />
 
       <FadeIn className="container mx-auto px-4 md:px-8 max-w-6xl mt-12">
-        
-        {/* Error State */}
-        {error && (
-           <div className="text-center bg-red-50 text-red-600 p-4 rounded-lg">
-             <p>Gagal memuat berita terkini.</p>
-           </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <Link href="/warta/kategori/pengumuman" className="block group">
+            <div className="flex flex-col items-center justify-center p-10 bg-white rounded-2xl border-2 border-slate-100 shadow-sm transition-all duration-300 group-hover:border-blue-300 group-hover:bg-blue-50/50 group-hover:shadow-md group-hover:-translate-y-1 h-full">
+              <Info className="w-12 h-12 mb-4 text-blue-500 group-hover:text-blue-600 transition-colors" />
+              <h3 className="font-bold text-xl text-slate-800 group-hover:text-blue-700 transition-colors">Pengumuman</h3>
+              <p className="text-sm text-slate-500 text-center mt-2">Informasi dan pengumuman terbaru dari gereja.</p>
+            </div>
+          </Link>
 
-        {/* Empty State */}
-        {!error && (!news || news.length === 0) && (
-           <div className="text-center py-20">
-             <p className="text-slate-500 text-lg">Belum ada warta paroki terbaru.</p>
-           </div>
-        )}
+          <Link href="/warta/kategori/berita" className="block group">
+            <div className="flex flex-col items-center justify-center p-10 bg-white rounded-2xl border-2 border-slate-100 shadow-sm transition-all duration-300 group-hover:border-amber-300 group-hover:bg-amber-50/50 group-hover:shadow-md group-hover:-translate-y-1 h-full">
+              <Newspaper className="w-12 h-12 mb-4 text-amber-500 group-hover:text-amber-600 transition-colors" />
+              <h3 className="font-bold text-xl text-slate-800 group-hover:text-amber-700 transition-colors">Berita Paroki</h3>
+              <p className="text-sm text-slate-500 text-center mt-2">Kumpulan berita kegiatan di lingkungan paroki.</p>
+            </div>
+          </Link>
 
-        {/* News Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {(news || []).map((item) => (
-            <article key={item.id} className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition-shadow flex flex-col h-full">
-              <div className="h-48 overflow-hidden bg-slate-200 relative">
-                 {item.image_url ? (
-                   <img 
-                     src={item.image_url} 
-                     alt={item.title}
-                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                   />
-                 ) : (
-                    <div className="w-full h-full flex items-center justify-center text-slate-400 bg-slate-100">
-                      <span className="text-xs font-medium uppercase tracking-wider">No Image</span>
-                    </div>
-                 )}
-              </div>
-              <div className="p-6 flex flex-col flex-grow">
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-amber-600 font-medium mb-3">
-                  <div className="flex items-center gap-1">
-                    <Calendar size={14} />
-                    {item.published_date}
-                  </div>
-                  <div className="flex items-center gap-1 text-slate-500">
-                    <Eye size={14} />
-                    {item.views || 0}
-                  </div>
-                </div>
-                <Link href={`/warta/${item.slug}`}>
-                   <h3 className="text-xl font-bold text-slate-800 mb-3 line-clamp-2 hover:text-amber-600 transition-colors cursor-pointer">
-                     {item.title}
-                   </h3>
-                </Link>
-                <p className="text-slate-600 text-sm mb-6 line-clamp-3">
-                  {item.summary}
-                </p>
-                <div className="mt-auto pt-4 border-t border-slate-100">
-                  <Link 
-                    href={`/warta/${item.slug}`} 
-                    className="inline-flex items-center gap-2 text-sm font-bold text-slate-700 hover:text-amber-600 transition-colors"
-                  >
-                    Baca Selengkapnya
-                    <ArrowRight size={16} />
-                  </Link>
-                </div>
-              </div>
-            </article>
-          ))}
+          <Link href="/warta/kategori/katekese" className="block group">
+            <div className="flex flex-col items-center justify-center p-10 bg-white rounded-2xl border-2 border-slate-100 shadow-sm transition-all duration-300 group-hover:border-purple-300 group-hover:bg-purple-50/50 group-hover:shadow-md group-hover:-translate-y-1 h-full">
+              <BookOpen className="w-12 h-12 mb-4 text-purple-500 group-hover:text-purple-600 transition-colors" />
+              <h3 className="font-bold text-xl text-slate-800 group-hover:text-purple-700 transition-colors">Katekese & Renungan</h3>
+              <p className="text-sm text-slate-500 text-center mt-2">Bahan katekese dan renungan harian umat.</p>
+            </div>
+          </Link>
+
         </div>
       </FadeIn>
     </main>

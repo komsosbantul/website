@@ -107,6 +107,15 @@ export default function AdminNewsPage() {
                            )}
                         </div>
                         <div>
+                           <div className="flex items-center gap-2 mb-1">
+                             <span className={`text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full ${
+                               article.category === 'pengumuman' ? 'bg-blue-100 text-blue-700' :
+                               article.category === 'katekese' ? 'bg-purple-100 text-purple-700' :
+                               'bg-amber-100 text-amber-700'
+                             }`}>
+                               {article.category || 'berita'}
+                             </span>
+                           </div>
                            <p className="font-medium text-slate-800 line-clamp-1">{article.title}</p>
                            <p className="text-xs text-slate-400 font-mono">/{article.slug}</p>
                         </div>

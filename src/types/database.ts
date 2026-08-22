@@ -101,6 +101,7 @@ export interface Database {
           id: string
           title: string
           slug: string
+          category: string
           content: string
           summary: string
           image_url: string | null
@@ -113,6 +114,7 @@ export interface Database {
           id?: string
           title: string
           slug: string
+          category?: string
           content: string
           summary: string
           image_url?: string | null
@@ -125,6 +127,7 @@ export interface Database {
           id?: string
           title?: string
           slug?: string
+          category?: string
           content?: string
           summary?: string
           image_url?: string | null

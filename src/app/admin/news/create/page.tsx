@@ -12,13 +12,14 @@ export default function CreateNewsPage() {
   const supabase = createClient();
   
   const [loading, setLoading] = useState(false);
+  const [coverFile, setCoverFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
+    category: "berita",
     summary: "",
     content: "",
     author_name: "",
-    image_url: "",
     published_date: new Date().toISOString().split('T')[0], // Default to today
   });
 
@@ -49,7 +50,34 @@ export default function CreateNewsPage() {
     setLoading(true);
 
     try {
-      const { error } = await (supabase as any).from("news_articles").insert([formData] as any);
+      let coverImageUrl = null;
+
+      if (coverFile) {
+        const fileExt = coverFile.name.split('.').pop();
+        const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
+        const filePath = `news_covers/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from("news_images")
+          .upload(filePath, coverFile);
+
+        if (uploadError) {
+          throw new Error("Gagal mengupload gambar cover: " + uploadError.message);
+        }
+        
+        const { data: publicUrlData } = supabase.storage
+          .from("news_images")
+          .getPublicUrl(filePath);
+          
+        coverImageUrl = publicUrlData.publicUrl;
+      }
+
+      const payload = {
+         ...formData,
+         image_url: coverImageUrl
+      };
+
+      const { error } = await (supabase as any).from("news_articles").insert([payload] as any);
       
       if (error) {
         if (error.code === '23505') { // Unique violation for slug
@@ -134,31 +162,64 @@ export default function CreateNewsPage() {
                 />
              </div>
 
-             {/* Image URL */}
+             {/* Image File */}
              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">URL Gambar Cover</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Upload Gambar Cover</label>
+                
+                {coverFile && (
+                   <div className="mb-3">
+                      <p className="text-xs text-slate-500 mb-1">Preview gambar:</p>
+                      <img 
+                        src={URL.createObjectURL(coverFile)} 
+                        alt="Cover preview" 
+                        className="h-32 object-cover rounded border" 
+                      />
+                   </div>
+                )}
+
                 <input
-                type="url"
-                name="image_url"
-                value={formData.image_url}
-                onChange={handleChange}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
-                placeholder="https://example.com/image.jpg"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      setCoverFile(e.target.files[0]);
+                    }
+                  }}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
                 />
+                <p className="text-xs text-slate-400 mt-1">Pilih gambar dari perangkat Anda (.jpg, .png, .jpeg).</p>
              </div>
           </div>
 
-          {/* Author */}
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Nama Penulis</label>
-            <input
-              type="text"
-              name="author_name"
-              value={formData.author_name}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
-              placeholder="Contoh: Willy Putranta"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+             {/* Category */}
+             <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Kategori</label>
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange as any}
+                  required
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                >
+                  <option value="pengumuman">Pengumuman</option>
+                  <option value="berita">Berita Paroki</option>
+                  <option value="katekese">Katekese</option>
+                </select>
+             </div>
+
+             {/* Author */}
+             <div>
+               <label className="block text-sm font-medium text-slate-700 mb-2">Nama Penulis</label>
+               <input
+                 type="text"
+                 name="author_name"
+                 value={formData.author_name}
+                 onChange={handleChange}
+                 className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none"
+                 placeholder="Contoh: Willy Putranta"
+               />
+             </div>
           </div>
 
           {/* Summary */}
