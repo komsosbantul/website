@@ -19,12 +19,27 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      if (email === "komsos.styakobus.bantul@gmail.com" && password === "085713389415") {
-        document.cookie = "admin_session=true; path=/";
-        router.push('/admin/news');
-        router.refresh();
-      } else {
+      // Mengecek menggunakan Supabase Auth
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (signInError) {
+        // Fallback sementara untuk akun lama yang di-*hardcode*
+        if (email === "komsos.styakobus.bantul@gmail.com" && password === "085713389415") {
+          document.cookie = "admin_session=true; path=/";
+          router.push('/admin/dashboard');
+          router.refresh();
+          return;
+        }
         throw new Error("Email atau password salah.");
+      }
+
+      if (data.session) {
+        document.cookie = "admin_session=true; path=/";
+        router.push('/admin/dashboard');
+        router.refresh();
       }
     } catch (err: any) {
       setError(err.message || 'Gagal masuk. Periksa email dan password Anda.');
