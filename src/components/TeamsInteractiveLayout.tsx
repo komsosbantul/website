@@ -80,6 +80,7 @@ export default function TeamsInteractiveLayout({ categories }: { categories: Lay
               {/* Mobile view (select dropdown) */}
               <div className="md:hidden relative">
                 <select
+                  aria-label={`Pilih Kategori ${category.title}`}
                   className="w-full bg-white border border-slate-200 text-slate-800 font-semibold rounded-lg px-4 py-3 appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 shadow-sm"
                   value={activeCategoryIdx === catIdx ? activeItemIdx : 0}
                   onChange={(e) => {

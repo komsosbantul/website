@@ -63,6 +63,7 @@ export default function ScheduleInteractiveLayout({ groupedData }: { groupedData
           {/* Mobile view (select dropdown) */}
           <div className="md:hidden relative mt-2">
             <select
+              aria-label="Pilih Gereja"
               className="w-full bg-white border border-slate-200 text-slate-800 font-semibold rounded-lg px-4 py-3 appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 shadow-sm"
               value={activeIndex}
               onChange={(e) => setActiveIndex(Number(e.target.value))}

@@ -15,13 +15,13 @@ export default function Footer() {
               {siteConfig.description}
             </p>
             <div className="flex gap-4 pt-4">
-              <Link href={siteConfig.socials.instagram} className="hover:text-amber-500 transition-colors">
+              <Link href={siteConfig.socials.instagram} aria-label="Instagram" className="hover:text-amber-500 transition-colors">
                 <Instagram size={24} />
               </Link>
-              <Link href={siteConfig.socials.youtube} className="hover:text-amber-500 transition-colors">
+              <Link href={siteConfig.socials.youtube} aria-label="YouTube" className="hover:text-amber-500 transition-colors">
                 <Youtube size={24} />
               </Link>
-              <Link href={siteConfig.socials.facebook} className="hover:text-amber-500 transition-colors">
+              <Link href={siteConfig.socials.facebook} aria-label="Facebook" className="hover:text-amber-500 transition-colors">
                 <Facebook size={24} />
               </Link>
             </div>
