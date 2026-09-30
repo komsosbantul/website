@@ -5,24 +5,25 @@ import { siteConfig } from '@/lib/data'
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = await createClient()
   
-  // Base static routes
+  // Base static routes with optimized priorities
   const routes = [
-    '',
-    '/profil',
-    '/profil/sejarah',
-    '/profil/visi-misi',
-    '/profil/pastor',
-    '/profil/lingkungan',
-    '/jadwal',
-    '/galeri',
-    '/warta',
-    '/unduhan',
-    '/kontak'
-  ].map((route) => ({
+    { route: '', priority: 1.0, changeFrequency: 'daily' as const },
+    { route: '/gereja-klodran-bantul', priority: 0.95, changeFrequency: 'weekly' as const },
+    { route: '/jadwal', priority: 0.95, changeFrequency: 'weekly' as const },
+    { route: '/profil', priority: 0.9, changeFrequency: 'monthly' as const },
+    { route: '/profil/sejarah', priority: 0.85, changeFrequency: 'monthly' as const },
+    { route: '/profil/visi-misi', priority: 0.85, changeFrequency: 'monthly' as const },
+    { route: '/profil/pastor', priority: 0.85, changeFrequency: 'monthly' as const },
+    { route: '/profil/lingkungan', priority: 0.8, changeFrequency: 'monthly' as const },
+    { route: '/warta', priority: 0.9, changeFrequency: 'daily' as const },
+    { route: '/galeri', priority: 0.75, changeFrequency: 'weekly' as const },
+    { route: '/unduhan', priority: 0.7, changeFrequency: 'monthly' as const },
+    { route: '/kontak', priority: 0.8, changeFrequency: 'monthly' as const },
+  ].map(({ route, priority, changeFrequency }) => ({
     url: `${siteConfig.url}${route}`,
     lastModified: new Date().toISOString(),
-    changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8,
+    changeFrequency,
+    priority,
   }))
 
   // Fetch dynamic news articles from Supabase

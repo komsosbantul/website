@@ -36,24 +36,47 @@ export interface HeroContent {
 
 export const siteConfig: SiteConfig = {
   name: "Paroki Santo Yakobus Bantul",
-  description: "Website Resmi Paroki Santo Yakobus Bantul. Dapatkan informasi jadwal misa, berita paroki, sakramen, dan kegiatan umat Katolik di Bantul.",
+  description: "Website Resmi Gereja Santo Yakobus Bantul (Klodran). Jadwal Misa Gereja Bantul, berita paroki, sakramen, dan kegiatan umat Katolik Bantul Yogyakarta. Gereja Klodran Bantul - Paroki Santo Yakobus.",
   url: "https://parokibantul.org",
   keywords: [
-    "gereja katolik",
-    "jadwal misa",
-    "gereja di bantul",
-    "paroki bantul",
+    // Primary - Gereja Bantul
     "gereja bantul",
     "Gereja Bantul",
+    "gereja di bantul",
+    "gereja katolik bantul",
     "Gereja Katolik Bantul",
-    "Gereja Katolik Yogyakarta",
+    // Primary - Gereja Klodran
+    "gereja klodran bantul",
+    "Gereja Klodran Bantul",
+    "gereja klodran",
+    "gereja santo yakobus klodran",
+    "Gereja Santo Yakobus Klodran Bantul",
+    "gereja klodran yogyakarta",
+    // Paroki
+    "paroki bantul",
+    "paroki santo yakobus bantul",
+    "paroki klodran bantul",
+    "paroki santo yakobus klodran",
+    "parokibantul.org",
+    // Jadwal Misa
     "jadwal misa bantul",
+    "jadwal misa gereja bantul",
+    "jadwal misa klodran bantul",
+    "jadwal misa gereja klodran",
+    "misa minggu bantul",
+    "misa harian bantul",
+    // Umum
+    "gereja katolik yogyakarta",
+    "Gereja Katolik Yogyakarta",
     "katolik bantul",
-    "paroki santo yakobus",
-    "keuskupan agung semarang",
-    "berita gereja bantul"
+    "umat katolik bantul",
+    "keuskupan agung semarang bantul",
+    "santo yakobus bantul",
+    "berita gereja bantul",
+    "warta paroki bantul",
+    "gereja bantul yogyakarta",
   ],
-  address: "Jalan Mgr. Albertus Soegijopranoto, No. 1, Bantul, Bantul, Bantul, Yogyakarta, 55711",
+  address: "Jalan Mgr. Albertus Soegijopranoto, No. 1, Klodran, Bantul, Kabupaten Bantul, Daerah Istimewa Yogyakarta, 55711",
   email: "komsos.styakobus.bantul@gmail.com",
   phone: "0857-2576-3551",
   socials: {
