@@ -4,8 +4,9 @@ import Script from "next/script";
 import Image from "next/image";
 import {
   MapPin, Phone, Clock, ExternalLink, Mail, ChevronRight,
-  Church, CalendarDays, Star, Users, ArrowRight, Globe
+  Church, CalendarDays, ArrowRight, Globe
 } from "lucide-react";
+
 import { siteConfig } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -61,12 +62,6 @@ const missSchedule = [
   { day: "Jumat Pertama", time: "17:00 WIB", type: "Misa Jumat Pertama", highlight: false },
 ];
 
-const stats = [
-  { icon: <Users size={24} />, value: "8", label: "Wilayah Paroki" },
-  { icon: <Church size={24} />, value: "1934", label: "Berdiri Sejak" },
-  { icon: <CalendarDays size={24} />, value: "5×", label: "Jadwal Misa / Minggu" },
-  { icon: <Star size={24} />, value: "KAS", label: "Keuskupan Agung Semarang" },
-];
 
 export default function GerejaKlodranBantulPage() {
   return (
@@ -151,24 +146,7 @@ export default function GerejaKlodranBantulPage() {
           </div>
         </section>
 
-        {/* ── STATS STRIP ── */}
-        <section className="bg-amber-600 py-6 px-4">
-          <div className="container mx-auto max-w-5xl">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {stats.map((s, i) => (
-                <div key={i} className="flex items-center gap-3 text-white">
-                  <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                    {s.icon}
-                  </div>
-                  <div>
-                    <div className="font-black text-lg leading-tight">{s.value}</div>
-                    <div className="text-amber-100 text-xs leading-tight">{s.label}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+
 
         {/* ── INFO CARDS ── */}
         <section className="py-20 px-4 bg-white">
