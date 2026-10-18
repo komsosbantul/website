@@ -5,6 +5,7 @@ import Link from "next/link";
 import { createClient } from "@/utils/supabase/client";
 import { Database } from "@/types/database";
 import { Plus, Trash2, Loader2, Calendar, FileText, Pencil } from "lucide-react";
+import { formatImageUrl } from "@/lib/image-url";
 
 type NewsArticle = Database["public"]["Tables"]["news_articles"]["Row"];
 
@@ -101,7 +102,7 @@ export default function AdminNewsPage() {
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded bg-slate-100 flex items-center justify-center shrink-0 overflow-hidden">
                            {article.image_url ? (
-                              <img src={article.image_url} alt="" className="w-full h-full object-cover" />
+                              <img src={formatImageUrl(article.image_url)} alt="" className="w-full h-full object-cover" />
                            ) : (
                               <FileText size={20} className="text-slate-400" />
                            )}

@@ -4,6 +4,7 @@ import { Calendar, ArrowRight, Eye } from "lucide-react";
 import { createClient } from "@/utils/supabase/server";
 import { Database } from "@/types/database";
 import FadeIn from "./FadeIn";
+import { formatImageUrl } from "@/lib/image-url";
 
 export default async function NewsHighlightSection() {
   const supabase = await createClient();
@@ -49,7 +50,7 @@ export default async function NewsHighlightSection() {
               <div className="h-40 overflow-hidden bg-slate-200 relative">
                  {item.image_url ? (
                    <img 
-                     src={item.image_url} 
+                     src={formatImageUrl(item.image_url)} 
                      alt={item.title}
                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                    />

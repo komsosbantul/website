@@ -7,7 +7,7 @@ export const R2_BUCKET_NAME = process.env.R2_BUCKET_NAME || "";
 export const R2_PUBLIC_URL = (process.env.NEXT_PUBLIC_R2_PUBLIC_URL || "").replace(/\/+$/, "");
 
 export function isR2Configured(): boolean {
-  return Boolean(accountId && accessKeyId && secretAccessKey && R2_BUCKET_NAME && R2_PUBLIC_URL);
+  return Boolean(accountId && accessKeyId && secretAccessKey && R2_BUCKET_NAME);
 }
 
 export const r2Client = new S3Client({
@@ -50,7 +50,10 @@ export async function uploadBufferToR2({
     })
   );
 
-  const publicUrl = `${R2_PUBLIC_URL}/${cleanKey}`;
+  // If NEXT_PUBLIC_R2_PUBLIC_URL is a custom domain, use it; otherwise use our secure internal proxy /api/media to bypass ISP DNS blocks
+  const publicUrl = R2_PUBLIC_URL && !R2_PUBLIC_URL.includes("r2.dev")
+    ? `${R2_PUBLIC_URL}/${cleanKey}`
+    : `/api/media/${cleanKey}`;
 
   return {
     url: publicUrl,

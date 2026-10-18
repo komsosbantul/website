@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Database } from "@/types/database";
 import { revalidateGallery } from "@/app/actions/gallery";
 import { uploadToR2 } from "@/lib/upload";
+import { formatImageUrl } from "@/lib/image-url";
 
 export default function EditGalleryPage() {
   const router = useRouter();
@@ -183,7 +184,7 @@ export default function EditGalleryPage() {
                      {coverFile ? "Preview gambar baru:" : "Gambar saat ini:"}
                   </p>
                   <img 
-                    src={coverFile ? URL.createObjectURL(coverFile) : formData.cover_image} 
+                    src={coverFile ? URL.createObjectURL(coverFile) : formatImageUrl(formData.cover_image)} 
                     alt="Cover preview" 
                     className="h-32 object-cover rounded border" 
                   />

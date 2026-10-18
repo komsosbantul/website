@@ -5,6 +5,7 @@ import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { Database } from "@/types/database";
 import FadeIn from "@/components/FadeIn";
+import { formatImageUrl } from "@/lib/image-url";
 
 export const dynamic = 'force-dynamic';
 
@@ -96,7 +97,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   <div className="h-48 overflow-hidden bg-slate-200 relative">
                      {item.image_url ? (
                        <img 
-                         src={item.image_url} 
+                         src={formatImageUrl(item.image_url)} 
                          alt={item.title}
                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                        />

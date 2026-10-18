@@ -7,6 +7,7 @@ import { ArrowLeft, Loader2, Save, Trash2 } from "lucide-react";
 import Link from "next/link";
 import RichTextEditor from "@/components/RichTextEditor";
 import { uploadToR2 } from "@/lib/upload";
+import { formatImageUrl } from "@/lib/image-url";
 
 export default function EditNewsPage() {
   const router = useRouter();
@@ -242,7 +243,7 @@ export default function EditNewsPage() {
                    <div className="mb-3">
                       <p className="text-xs text-slate-500 mb-1">Gambar saat ini:</p>
                       <img 
-                        src={formData.image_url} 
+                        src={formatImageUrl(formData.image_url)} 
                         alt="Current cover" 
                         className="h-32 object-cover rounded border" 
                       />

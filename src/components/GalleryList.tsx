@@ -4,6 +4,7 @@ import React, { useState, useMemo } from "react";
 import { Image as ImageIcon, ExternalLink, Calendar, Filter } from "lucide-react";
 import Link from "next/link";
 import { Database } from "@/types/database";
+import { formatImageUrl } from "@/lib/image-url";
 
 type GalleryEvent = Database['public']['Tables']['gallery_events']['Row'];
 
@@ -106,7 +107,7 @@ export default function GalleryList({ events }: { events: GalleryEvent[] }) {
             <div className="relative aspect-[3/2] overflow-hidden bg-slate-200">
               {event.cover_image ? (
                 <img 
-                  src={event.cover_image} 
+                  src={formatImageUrl(event.cover_image)} 
                   alt={event.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />

@@ -4,9 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Eye, Clock, User } from "lucide-react";
 import { createClient } from "@/utils/supabase/server";
-import { Database } from "@/types/database";
-
 import { Metadata, ResolvingMetadata } from "next";
+import { formatImageUrl } from "@/lib/image-url";
 
 export const dynamic = 'force-dynamic';
 
@@ -141,7 +140,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
            <div className="w-full">
              {article.image_url ? (
                <img
-                 src={article.image_url}
+                 src={formatImageUrl(article.image_url)}
                  alt={article.title}
                  className="w-full h-auto max-h-[500px] object-cover"
                />
