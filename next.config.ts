@@ -42,6 +42,15 @@ const nextConfig: NextConfig = {
     // your project has type errors.
     ignoreBuildErrors: true,
   },
+  async rewrites() {
+    if (!r2PublicUrl) return [];
+    return [
+      {
+        source: '/media/:path*',
+        destination: `${r2PublicUrl}/:path*`,
+      },
+    ];
+  },
   async redirects() {
     return [
       {
