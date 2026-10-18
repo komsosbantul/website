@@ -7,6 +7,7 @@ import { ArrowLeft, Loader2, Save, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { Database } from "@/types/database";
 import { revalidateGallery } from "@/app/actions/gallery";
+import { uploadToR2 } from "@/lib/upload";
 
 export default function EditGalleryPage() {
   const router = useRouter();
@@ -70,23 +71,7 @@ export default function EditGalleryPage() {
       let coverImageUrl = formData.cover_image;
 
       if (coverFile) {
-        const fileExt = coverFile.name.split('.').pop();
-        const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
-        const filePath = `covers/${fileName}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from("gallery_images")
-          .upload(filePath, coverFile);
-
-        if (uploadError) {
-          throw new Error("Gagal mengupload gambar cover: " + uploadError.message);
-        }
-        
-        const { data: publicUrlData } = supabase.storage
-          .from("gallery_images")
-          .getPublicUrl(filePath);
-          
-        coverImageUrl = publicUrlData.publicUrl;
+        coverImageUrl = await uploadToR2(coverFile, "gallery");
       }
 
       const payload = {

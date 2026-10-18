@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useRef, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
@@ -8,8 +9,9 @@ import { Mark, mergeAttributes } from '@tiptap/core';
 import { 
   Bold, Italic, Strikethrough, List, ListOrdered, 
   AlignLeft, AlignCenter, AlignRight, AlignJustify,
-  ImageIcon, Type
+  ImageIcon, Type, Loader2, Link as LinkIcon
 } from 'lucide-react';
+import { uploadToR2 } from '@/lib/upload';
 
 const SmallText = Mark.create({
   name: 'small',
@@ -34,14 +36,35 @@ interface RichTextEditorProps {
 }
 
 const MenuBar = ({ editor }: { editor: any }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
   if (!editor) {
     return null;
   }
 
-  const addImage = () => {
+  const addImageUrl = () => {
     const url = window.prompt('URL Gambar (Pastikan link gambar langsung):');
     if (url) {
       editor.chain().focus().setImage({ src: url }).run();
+    }
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const publicUrl = await uploadToR2(file, "content");
+      editor.chain().focus().setImage({ src: publicUrl }).run();
+    } catch (err: any) {
+      alert("Gagal mengupload gambar: " + (err.message || "Unknown error"));
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
   };
 
@@ -161,14 +184,33 @@ const MenuBar = ({ editor }: { editor: any }) => {
 
       <div className="w-px h-6 bg-slate-300 mx-1" />
 
+      <input
+        type="file"
+        ref={fileInputRef}
+        className="hidden"
+        accept="image/*"
+        onChange={handleFileUpload}
+      />
+
       <button
-        onClick={addImage}
+        onClick={() => fileInputRef.current?.click()}
+        disabled={uploading}
+        className="p-2 rounded hover:bg-slate-200 text-slate-600 flex items-center gap-1 disabled:opacity-50"
+        type="button"
+        title="Upload Gambar dari Komputer / HP"
+      >
+        {uploading ? <Loader2 size={16} className="animate-spin text-amber-600" /> : <ImageIcon size={16} />}
+        <span className="text-xs font-medium">{uploading ? "Mengupload..." : "Upload Gambar"}</span>
+      </button>
+
+      <button
+        onClick={addImageUrl}
         className="p-2 rounded hover:bg-slate-200 text-slate-600 flex items-center gap-1"
         type="button"
-        title="Insert Image"
+        title="Masukkan Gambar via URL"
       >
-        <ImageIcon size={16} />
-        <span className="text-xs font-medium">Gambar</span>
+        <LinkIcon size={14} />
+        <span className="text-xs font-medium">Link URL</span>
       </button>
     </div>
   );

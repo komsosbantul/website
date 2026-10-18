@@ -6,6 +6,7 @@ import { createClient } from "@/utils/supabase/client";
 import { ArrowLeft, Loader2, Save, Trash2 } from "lucide-react";
 import Link from "next/link";
 import RichTextEditor from "@/components/RichTextEditor";
+import { uploadToR2 } from "@/lib/upload";
 
 export default function EditNewsPage() {
   const router = useRouter();
@@ -91,23 +92,7 @@ export default function EditNewsPage() {
       let finalImageUrl = formData.image_url;
 
       if (coverFile) {
-        const fileExt = coverFile.name.split('.').pop();
-        const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
-        const filePath = `news_covers/${fileName}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from("news_images")
-          .upload(filePath, coverFile);
-
-        if (uploadError) {
-          throw new Error("Gagal mengupload gambar cover baru: " + uploadError.message);
-        }
-        
-        const { data: publicUrlData } = supabase.storage
-          .from("news_images")
-          .getPublicUrl(filePath);
-          
-        finalImageUrl = publicUrlData.publicUrl;
+        finalImageUrl = await uploadToR2(coverFile, "news");
       }
 
       const payload = {
