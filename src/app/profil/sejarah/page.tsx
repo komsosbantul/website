@@ -33,8 +33,8 @@ export default function SejarahPage() {
   const wilayahList = [
     "Santa Maria tak Bernoda Cepit (4 Lingkungan)",
     "Santa Maria Assumpta Melikan (3 Lingkungan)",
-    "Santa Maria Immaculata Cordis Bantul Krajan (2 Lingkungan)",
-    "Santo Yusuf Palbapang (2 Lingkungan)",
+    "Santa Anna (5 Lingkungan)",
+    "Santa Theresa (4 Lingkungan)",
     "Brayat Minulya Nogosari (4 Lingkungan)",
     "Santo Fransiskus Xaverius (2 Lingkungan)",
     "Mater Dei Imogiri (6 Lingkungan)",
@@ -169,7 +169,7 @@ export default function SejarahPage() {
                 </p>
                 <div className="mt-6 flex items-center gap-2 text-amber-700 font-bold">
                   <Calendar size={20} />
-                  <span>Data Paroki 2024</span>
+                  <span>Data Paroki 2026</span>
                 </div>
               </div>
 
