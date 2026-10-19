@@ -31,14 +31,14 @@ export default function SejarahPage() {
   ];
 
   const wilayahList = [
-    "Santa Maria tak Bernoda Cepit (4 Lingkungan)",
-    "Santa Maria Assumpta Melikan (3 Lingkungan)",
-    "Santa Anna (5 Lingkungan)",
-    "Santa Theresa (4 Lingkungan)",
-    "Brayat Minulya Nogosari (4 Lingkungan)",
-    "Santo Fransiskus Xaverius (2 Lingkungan)",
-    "Mater Dei Imogiri (6 Lingkungan)",
-    "Maria Rosari Gesikan (7 Lingkungan)",
+    "Wilayah Maria Tak Bernoda (4 Lingkungan)",
+    "Wilayah Maria Assumpta (5 Lingkungan)",
+    "Wilayah Santa Teresa (4 Lingkungan)",
+    "Wilayah Brayat Minulyo (4 Lingkungan)",
+    "Wilayah Fransiskus Xaverius (4 Lingkungan)",
+    "Wilayah Santa Anna (5 Lingkungan)",
+    "Wilayah Maria Rosari (7 Lingkungan)",
+    "Wilayah Mater Dei (6 Lingkungan)",
   ];
 
   return (
@@ -165,7 +165,7 @@ export default function SejarahPage() {
                 <h2 className="text-3xl font-bold text-slate-900 mb-4">Kondisi Saat Ini</h2>
                 <p className="text-slate-700 leading-relaxed">
                   Saat ini Paroki Santo Yakobus Bantul terus berkembang dan melayani umat yang tersebar di berbagai wilayah.
-                  Secara administratif paroki terdiri dari 8 Wilayah utama.
+                  Secara administratif paroki terdiri dari 8 Wilayah utama dan 39 Lingkungan.
                 </p>
                 <div className="mt-6 flex items-center gap-2 text-amber-700 font-bold">
                   <Calendar size={20} />
